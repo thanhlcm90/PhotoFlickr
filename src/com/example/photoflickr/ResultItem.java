@@ -1,7 +1,5 @@
 package com.example.photoflickr;
 
-import java.io.Serializable;
-
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -10,6 +8,7 @@ import android.util.Log;
 
 public class ResultItem {
 	private String avatarurl;
+	private String photoid;
 	private String photourl;
 	private String username;
 	private String fullname;
@@ -22,12 +21,7 @@ public class ResultItem {
 	private Context context;
 	private Bitmap avatar;
 	private Bitmap photo;
-	
-	@SuppressWarnings("serial") //with this annotation we are going to hide compiler warning
-	private class DetailInfo implements Serializable {
-				
-	}
-	
+		
 	public ResultItem(Context context, PhotoArrayAdapter adapter){
 		this.avatarurl="";
 		this.photourl="";
@@ -37,10 +31,6 @@ public class ResultItem {
 		this.context = context;
 		this.photo=null;
 		this.avatar=null;
-		
-		// Dat Image mac dinh
-		//avatar = BitmapFactory.decodeResource(context.getResources(), R.drawable.no_avatar);
-		//photo = BitmapFactory.decodeResource(context.getResources(), R.drawable.no_image_available);
 	}
 	
 	public String getUserid() {
@@ -111,6 +101,12 @@ public class ResultItem {
 	
 	public Bitmap getPhotoImage() {
 		return photo;
+	}
+	public String getPhotoId() {
+		return photoid;
+	}
+	public void setPhotoId(String photoid) {
+		this.photoid=photoid;
 	}
 	public String getPhotoUrl() {
 		return photourl;

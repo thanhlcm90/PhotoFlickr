@@ -1,18 +1,26 @@
 package com.example.photoflickr;
 
+import java.util.ArrayList;
+
 import android.app.Activity;
+import android.app.ListActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 public class DetailActivity extends Activity {
 	ImageView img_photo;
+	static ArrayList<CommentItem> list = new ArrayList<CommentItem>();
+	CommentArrayAdapter adapter;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -30,14 +38,23 @@ public class DetailActivity extends Activity {
 		String photo = intent.getStringExtra(MainActivity.EXTRA_ITEM_PHOTO_URL);
 		// Xu ly lai URL, get Anh lon (240pX)
 		photo=photo.replace("_t.jpg", "_m.jpg");
+		String photoid = intent.getStringExtra(MainActivity.EXTRA_ITEM_PHOTO_ID);
 		
-		TextView tv_username = (TextView) findViewById(R.id.username);
-		TextView tv_fullname = (TextView) findViewById(R.id.fullname);
-		TextView tv_location = (TextView) findViewById(R.id.location);
-		TextView tv_postdate = (TextView) findViewById(R.id.postdate);
-		TextView tv_description = (TextView) findViewById(R.id.description);
-		ImageView img_avatar =(ImageView) findViewById(R.id.avatar);
-		img_photo = (ImageView) findViewById(R.id.photo);
+		final ListView comment_list = (ListView) findViewById(R.id.comment_list);
+		adapter = new CommentArrayAdapter(this, list);
+		View header_view = ((LayoutInflater) this
+				.getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(
+				R.layout.comment_header, null, false);
+		comment_list.addHeaderView(header_view);
+		comment_list.setAdapter(adapter);
+		
+		TextView tv_username = (TextView) header_view.findViewById(R.id.username);
+		TextView tv_fullname = (TextView) header_view.findViewById(R.id.fullname);
+		TextView tv_location = (TextView) header_view.findViewById(R.id.location);
+		TextView tv_postdate = (TextView) header_view.findViewById(R.id.postdate);
+		TextView tv_description = (TextView) header_view.findViewById(R.id.description);
+		ImageView img_avatar =(ImageView) header_view.findViewById(R.id.avatar);
+		img_photo = (ImageView) header_view.findViewById(R.id.photo);
 		
 		tv_username.setText(username);
 		tv_fullname.setText(fullname);
@@ -49,6 +66,7 @@ public class DetailActivity extends Activity {
 		img_avatar.setImageBitmap(avatar);
 		
 		new LoadPhotoTask(this).execute(photo);
+		new LoadCommentTask(comment_list, list, adapter).execute(photoid);
 	}
 
 	@Override
@@ -81,7 +99,8 @@ public class DetailActivity extends Activity {
 				e.printStackTrace();
 				return null;
 			}
-		}
-		
+		}	
 	}
+	
+	
 }

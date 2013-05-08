@@ -10,19 +10,18 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class PhotoArrayAdapter extends ArrayAdapter<ResultItem> {
-	private final List<ResultItem> values;
+public class CommentArrayAdapter extends ArrayAdapter<CommentItem> {
+	private final List<CommentItem> values;
 	private LayoutInflater inflater;
 
 	static class ViewHolder {
 		public TextView username;
-		public TextView postdate;
 		public ImageView avatar;
-		public ImageView photo;
+		public TextView comment;
 	}
 
-	public PhotoArrayAdapter(Context context, List<ResultItem> objects) {
-		super(context, R.layout.list_item, objects);
+	public CommentArrayAdapter(Context context, List<CommentItem> objects) {
+		super(context, R.layout.comment_item, objects);
 		inflater = (LayoutInflater) context
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		this.values = objects;
@@ -32,7 +31,7 @@ public class PhotoArrayAdapter extends ArrayAdapter<ResultItem> {
 		return values.size();
 	}
 
-	public ResultItem getItem(int position) {
+	public CommentItem getItem(int position) {
 		return values.get(position);
 	}
 
@@ -44,24 +43,22 @@ public class PhotoArrayAdapter extends ArrayAdapter<ResultItem> {
 	public View getView(int position, View convertView, ViewGroup parent) {
 		ViewHolder holder;
 		if (convertView == null) {
-			View rowView = inflater.inflate(R.layout.list_item, parent, false);
+			View rowView = inflater.inflate(R.layout.comment_item, parent, false);
 			holder = new ViewHolder();
 			holder.avatar = (ImageView) rowView.findViewById(R.id.avatar);
 			holder.username = (TextView) rowView.findViewById(R.id.username);
-			holder.postdate = (TextView) rowView.findViewById(R.id.postdate);
-			holder.photo = (ImageView) rowView.findViewById(R.id.photo);
+			holder.comment = (TextView) rowView.findViewById(R.id.comment);
 			convertView = rowView;
 			convertView.setTag(holder);
 		} else {
 			holder = (ViewHolder) convertView.getTag();
 		}
-		ResultItem item = values.get(position);
+		CommentItem item = values.get(position);
 
 		if (item != null) {
 			holder.username.setText(item.getUsername());
-			holder.postdate.setText(item.getPostDate());
+			holder.comment.setText(item.getComment());
 			holder.avatar.setImageBitmap(item.getAvatarImage());
-			holder.photo.setImageBitmap(item.getPhotoImage());
 		}
 		return convertView;
 	}

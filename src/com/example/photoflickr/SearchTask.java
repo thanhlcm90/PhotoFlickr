@@ -10,7 +10,7 @@ import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.ListView;
 
-public class SearchApiCall extends AsyncTask<String, String, Boolean> {
+public class SearchTask extends AsyncTask<String, String, Boolean> {
 	List<ResultItem> list;
 	PhotoArrayAdapter adapter;
 	List<ResultItem> listTemp;
@@ -18,7 +18,7 @@ public class SearchApiCall extends AsyncTask<String, String, Boolean> {
 	private Context context;
 	private ListView listview;
 
-	public SearchApiCall(ListView listview, List<ResultItem> list,
+	public SearchTask(ListView listview, List<ResultItem> list,
 			PhotoArrayAdapter adapter) {
 		this.list = list;
 		this.adapter = adapter;
@@ -110,6 +110,7 @@ public class SearchApiCall extends AsyncTask<String, String, Boolean> {
 					item.setTitle(title);
 					item.setDescription(description);
 					item.setAvatarUrl(avatarurl);
+					item.setPhotoId(id);
 					item.setPhotoUrl(photourl);
 					listTemp.add(item);
 				}

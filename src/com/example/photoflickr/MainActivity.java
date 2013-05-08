@@ -1,8 +1,6 @@
 package com.example.photoflickr;
 
 import java.util.ArrayList;
-import java.util.zip.Inflater;
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
@@ -28,13 +26,14 @@ public class MainActivity extends Activity {
 	public final static String EXTRA_ITEM_POSTDATE = "com.example.photoflickr.ITEM.POSTDATE";
 	public final static String EXTRA_ITEM_AVATAR = "com.example.photoflickr.ITEM.AVATAR";
 	public final static String EXTRA_ITEM_PHOTO_URL = "com.example.photoflickr.ITEM.PHOTO_URL";
-
-	static ArrayList<ResultItem> list = new ArrayList<ResultItem>();
+	public final static String EXTRA_ITEM_PHOTO_ID = "com.example.photoflickr.ITEM.PHOTO_ID";
+	
 	static Boolean loadingMore = false;
 	int per_page = 5;
 	static int page = 0;
 	static int currentFirstVisibleItem;
 	static String searchText = "";
+	static ArrayList<ResultItem> list = new ArrayList<ResultItem>();
 	ListView photoView;
 	PhotoArrayAdapter adapter;
 
@@ -53,14 +52,14 @@ public class MainActivity extends Activity {
 						&& keyCode == KeyEvent.KEYCODE_ENTER) {
 					list.clear();
 					// Lay ket qua JSON tu URL
-					searchText = keyword.getText().toString();
+					searchText = keyword.getText().toString().replace(" ", "+");
 					String url = "http://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=63a95e8826699c2e7f401a3288bf20cf&text="
 							+ searchText
 							+ "&per_page="
 							+ per_page
 							+ "&page="
 							+ page + "&format=json&nojsoncallback=1";
-					new SearchApiCall(photoView, list, adapter)
+					new SearchTask(photoView, list, adapter)
 							.execute(url);
 				}
 				return false;
@@ -92,6 +91,7 @@ public class MainActivity extends Activity {
 				intent.putExtra(EXTRA_ITEM_POSTDATE, item.getPostDate());
 				intent.putExtra(EXTRA_ITEM_AVATAR, item.getAvatarImage());
 				intent.putExtra(EXTRA_ITEM_PHOTO_URL, item.getPhotoUrl());
+				intent.putExtra(EXTRA_ITEM_PHOTO_ID, item.getPhotoId());
 				startActivity(intent);
 			}
 		});
@@ -122,7 +122,7 @@ public class MainActivity extends Activity {
 							+ per_page
 							+ "&page="
 							+ page + "&format=json&nojsoncallback=1";
-					new SearchApiCall(photoView, list, adapter)
+					new SearchTask(photoView, list, adapter)
 							.execute(url);
 				}
 			}
@@ -143,16 +143,4 @@ public class MainActivity extends Activity {
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
 	}
-
-	@Override
-	protected void onRestoreInstanceState(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
-		super.onRestoreInstanceState(savedInstanceState);
-	}
-
-	@Override
-	protected void onSaveInstanceState(Bundle outState) {
-		super.onSaveInstanceState(outState);
-	}
-
 }
