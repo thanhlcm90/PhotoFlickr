@@ -53,7 +53,7 @@ public class PhotoArrayAdapter extends ArrayAdapter<ResultItem> {
 			holder.username = (TextView) rowView.findViewById(R.id.username);
 			holder.postdate = (TextView) rowView.findViewById(R.id.postdate);
 			holder.photo = (ImageView) rowView.findViewById(R.id.photo);
-			convertView=rowView;
+			convertView = rowView;
 			convertView.setTag(holder);
 		} else {
 			holder = (ViewHolder) convertView.getTag();
@@ -62,12 +62,9 @@ public class PhotoArrayAdapter extends ArrayAdapter<ResultItem> {
 
 		if (item != null) {
 			holder.username.setText(item.getUsername());
-			if (item.getPostDate() != null) {
-				holder.postdate.setText(DateFormat.format("dd/MM/yyyy",
-						item.getPostDate()));
-			}
-				holder.avatar.setImageBitmap(item.getAvatarImage());
-				holder.photo.setImageBitmap(item.getPhotoImage());
+			holder.postdate.setText(item.getPostDate());
+			holder.avatar.setImageBitmap(item.getAvatarImage());
+			holder.photo.setImageBitmap(item.getPhotoImage());
 		}
 		return convertView;
 	}

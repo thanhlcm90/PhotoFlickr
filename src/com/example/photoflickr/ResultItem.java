@@ -1,6 +1,6 @@
 package com.example.photoflickr;
 
-import java.sql.Date;
+import java.io.Serializable;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -10,35 +10,33 @@ import android.util.Log;
 
 public class ResultItem {
 	private String avatarurl;
-	private Bitmap avatar;
 	private String photourl;
-	private Bitmap photo;
 	private String username;
-	private Date postdate;
+	private String fullname;
+	private String location;
+	private String postdate;
+	private String userId; 
+	private String title;
+	private String description;
 	private PhotoArrayAdapter adapter;
 	private Context context;
-	private String userId; 
+	private Bitmap avatar;
+	private Bitmap photo;
+	
+	@SuppressWarnings("serial") //with this annotation we are going to hide compiler warning
+	private class DetailInfo implements Serializable {
+				
+	}
 	
 	public ResultItem(Context context, PhotoArrayAdapter adapter){
 		this.avatarurl="";
 		this.photourl="";
 		this.username="";
-		this.postdate=null;
+		this.postdate="";
 		this.adapter = adapter;
 		this.context = context;
-		
-		// Dat Image mac dinh
-		//avatar = BitmapFactory.decodeResource(context.getResources(), R.drawable.no_avatar);
-		//photo = BitmapFactory.decodeResource(context.getResources(), R.drawable.no_image_available);
-	}
-	
-	public ResultItem(Context context,PhotoArrayAdapter adapter, String avatarurl, String photourl, String username, Date postdate) {
-		this.avatarurl=avatarurl;
-		this.photourl=photourl;
-		this.username=username;
-		this.postdate=postdate;
-		this.adapter = adapter;
-		this.context = context;
+		this.photo=null;
+		this.avatar=null;
 		
 		// Dat Image mac dinh
 		//avatar = BitmapFactory.decodeResource(context.getResources(), R.drawable.no_avatar);
@@ -59,13 +57,41 @@ public class ResultItem {
 		username=value;
 	}
 	
-	public Date getPostDate() {
+	public String getPostDate() {
 		return postdate;
 	}
-	public void setPostDate(Date value) {
+	public void setPostDate(String value) {
 		postdate=value;
+	}	
+
+	public String getFullname() {
+		return fullname;
+	}
+	public void setFullname(String value) {
+		fullname=value;
+	}
+
+	public String getLocation() {
+		return location;
+	}
+	public void setLocation(String value) {
+		location=value;
 	}
 	
+	public String getTitle() {
+		return title;
+	}
+	public void setTitle(String value) {
+		title=value;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+	public void setDescription(String value) {
+		description=value;
+	}
+
 	public PhotoArrayAdapter getAdapter() {
 		return adapter;
 	}

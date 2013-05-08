@@ -14,29 +14,29 @@
             android:layout_margin="5dp"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:background="@drawable/no_avatar"
             android:contentDescription="@string/avatar" />
         <TextView android:id="@+id/username"
             android:layout_margin="5dp"
-            android:layout_width="fill_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:textIsSelectable="false">
         </TextView>
         <TextView android:id="@+id/postdate"
             android:layout_margin="5dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:textIsSelectable="false">
+            android:textIsSelectable="false"
+            android:textSize="12sp">
         </TextView>        
     </LinearLayout>
 
     <ImageView
         android:id="@+id/photo"
+        android:layout_margin="5dp"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_gravity="center_horizontal"
-        android:background="@drawable/no_image_available"
         android:contentDescription="@string/photo" />
 
 </LinearLayout>
