@@ -47,11 +47,11 @@ public class LoadCommentTask extends AsyncTask<String, String, Boolean> {
 					+ photoId + "&format=json&nojsoncallback=1";
 			JSONObject result = Utilities.getJSONfromURL(url);
 			if (result != null) {
-				JSONArray comments = result.getJSONObject("comments")
-						.getJSONArray("comment");
-				for (int i = 0; i < comments.length(); i++) {
+				JSONObject comments=result.getJSONObject("comments");
+				JSONArray commentArray = comments.getJSONArray("comment");
+				for (int i = 0; i < commentArray.length(); i++) {
 					CommentItem item = new CommentItem(context, adapter);
-					JSONObject e = comments.getJSONObject(i);
+					JSONObject e = commentArray.getJSONObject(i);
 					String owner = e.getString("author");
 					String authorname = e.getString("authorname");
 					String icon_server = e.getString("iconserver");

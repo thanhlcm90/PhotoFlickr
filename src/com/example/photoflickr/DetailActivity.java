@@ -3,7 +3,6 @@ package com.example.photoflickr;
 import java.util.ArrayList;
 
 import android.app.Activity;
-import android.app.ListActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -13,6 +12,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -45,6 +45,12 @@ public class DetailActivity extends Activity {
 		View header_view = ((LayoutInflater) this
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(
 				R.layout.comment_header, null, false);
+		header_view.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+								
+			}
+		});
 		comment_list.addHeaderView(header_view);
 		comment_list.setAdapter(adapter);
 		

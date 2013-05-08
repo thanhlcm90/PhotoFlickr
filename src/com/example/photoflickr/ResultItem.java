@@ -9,6 +9,7 @@ import android.util.Log;
 public class ResultItem {
 	private String avatarurl;
 	private String photoid;
+	private String photosecret;
 	private String photourl;
 	private String username;
 	private String fullname;
@@ -107,6 +108,12 @@ public class ResultItem {
 	}
 	public void setPhotoId(String photoid) {
 		this.photoid=photoid;
+	}
+	public String getPhotoSecret() {
+		return photosecret;
+	}
+	public void setPhotoSecret(String photosecret) {
+		this.photosecret=photoid;
 	}
 	public String getPhotoUrl() {
 		return photourl;
