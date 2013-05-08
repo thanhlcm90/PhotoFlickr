@@ -4,5 +4,7 @@
     <string name="app_name">PhotoFlickr</string>
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
-
+	<string name="keyword">Keyword</string>
+	<string name="avatar">Avatar</string>
+	<string name="photo">Photo</string>
 </resources>
