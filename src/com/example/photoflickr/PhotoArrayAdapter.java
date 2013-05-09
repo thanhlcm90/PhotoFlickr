@@ -2,6 +2,9 @@ package com.example.photoflickr;
 
 import java.util.List;
 
+import com.example.photoflickr.ui.MainActivity;
+import com.example.photoflickr.ui.MainFragement;
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -63,8 +66,8 @@ public class PhotoArrayAdapter extends ArrayAdapter<ResultItem> {
 			holder.username.setText(item.getUsername());
 			holder.location.setText(item.getLocation());
 			holder.postdate.setText(item.getPostDate());
-			MainActivity.imageDownloader.download(item.getAvatarUrl(), holder.avatar);
-			MainActivity.imageDownloader.download(item.getPhotoUrl(), holder.photo);
+			MainFragement.getAvatarFetcher().loadImage(item.getAvatarUrl(), holder.avatar);
+			MainFragement.getPhotoFetcher().loadImage(item.getPhotoUrl(), holder.photo);
 			//holder.avatar.setImageBitmap(item.getAvatarImage());
 			//holder.photo.setImageBitmap(item.getPhotoImage());
 		}

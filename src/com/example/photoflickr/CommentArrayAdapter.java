@@ -2,6 +2,10 @@ package com.example.photoflickr;
 
 import java.util.List;
 
+import com.example.photoflickr.ui.DetailActivity;
+import com.example.photoflickr.ui.DetailFragement;
+import com.example.photoflickr.ui.MainActivity;
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -58,7 +62,7 @@ public class CommentArrayAdapter extends ArrayAdapter<CommentItem> {
 		if (item != null) {
 			holder.username.setText(item.getUsername());
 			holder.comment.setText(item.getComment());
-			MainActivity.imageDownloader.download(item.getAvatarUrl(), holder.avatar);
+			DetailActivity.getImageFetcher().loadImage(item.getAvatarUrl(), holder.avatar);
 			//holder.avatar.setImageBitmap(item.getAvatarImage());
 		}
 		return convertView;

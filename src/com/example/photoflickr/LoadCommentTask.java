@@ -6,6 +6,9 @@ import java.util.List;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+
+import com.example.photoutil.Utils;
+
 import android.content.Context;
 import android.os.AsyncTask;
 import android.widget.ListView;
@@ -14,13 +17,11 @@ public class LoadCommentTask extends AsyncTask<String, String, Boolean> {
 	private final WeakReference<List<CommentItem>> listRef;
 	CommentArrayAdapter adapter;
 	private Context context;
-	private ListView listview;
 
 	public LoadCommentTask(ListView listview, List<CommentItem> list,
 			CommentArrayAdapter adapter) {
 		this.listRef = new WeakReference<List<CommentItem>>(list);
 		this.adapter = adapter;
-		this.listview = listview;
 		this.context = listview.getContext();
 	}
 
@@ -45,7 +46,7 @@ public class LoadCommentTask extends AsyncTask<String, String, Boolean> {
 				String photoId = params[0];
 				String url = "http://api.flickr.com/services/rest/?method=flickr.photos.comments.getList&api_key=63a95e8826699c2e7f401a3288bf20cf&photo_id="
 						+ photoId + "&format=json&nojsoncallback=1";
-				JSONObject result = Utilities.getJSONfromURL(url);
+				JSONObject result = Utils.getJSONfromURL(url);
 				if (result != null) {
 					JSONObject comments = result.getJSONObject("comments");
 					JSONArray commentArray = comments.getJSONArray("comment");

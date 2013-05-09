@@ -2,10 +2,10 @@ package com.example.photoflickr;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
-
+import com.example.photoflickr.ui.MainFragement;
+import com.example.photoutil.Utils;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
@@ -30,7 +30,7 @@ public class SearchTask extends AsyncTask<String, String, Boolean> {
 
 	@Override
 	protected void onPreExecute() {
-		MainActivity.loadingMore = true;
+		MainFragement.loadingMore = true;
 		this.dialog.setMessage("Seaching...");
 		this.dialog.show();
 	}
@@ -47,12 +47,12 @@ public class SearchTask extends AsyncTask<String, String, Boolean> {
 				}
 				adapter.notifyDataSetChanged();
 				listview.setSelectionFromTop(
-						MainActivity.currentFirstVisibleItem, 0);
+						MainFragement.currentFirstVisibleItem, 0);
 			}
 		}
 		if (this.dialog.isShowing())
 			this.dialog.dismiss();
-		MainActivity.loadingMore = false;
+		MainFragement.loadingMore = false;
 	}
 
 	@Override
@@ -60,7 +60,7 @@ public class SearchTask extends AsyncTask<String, String, Boolean> {
 		try {
 			if (listRef != null) {
 				List<ResultItem> list = listRef.get();
-				JSONObject result = Utilities.getJSONfromURL(params[0]);
+				JSONObject result = Utils.getJSONfromURL(params[0]);
 				if (result != null) {
 					Log.i("SearchApiCall", "Call Successfully");
 					JSONObject photos = result.getJSONObject("photos");
@@ -111,7 +111,7 @@ public class SearchTask extends AsyncTask<String, String, Boolean> {
 		@Override
 		protected Boolean doInBackground(String... arg0) {
 			try {
-				JSONObject json = Utilities
+				JSONObject json = Utils
 						.getJSONfromURL("http://api.flickr.com/services/rest/?method=flickr.photos.getInfo&api_key=63a95e8826699c2e7f401a3288bf20cf&photo_id="
 								+ item.getPhotoId()
 								+ "&secret="

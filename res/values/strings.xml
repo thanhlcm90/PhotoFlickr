@@ -9,4 +9,5 @@
     <string name="photo">Photo</string>
     <string name="title_activity_detail">DetailActivity</string>
 	<string name="comment">Comments for this Photo:</string>
+	<string name="no_network_connection_toast">No network connection found</string>
 </resources>

@@ -1,27 +1,25 @@
-package com.example.photoflickr;
+package com.example.photoutil;
 
 import java.io.BufferedReader;
-import java.io.FilterInputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import com.example.photoflickr.ui.MainActivity;
+
+import android.annotation.TargetApi;
 import android.net.http.AndroidHttpClient;
+import android.os.Build;
+import android.os.StrictMode;
 import android.util.Log;
 
-public class Utilities {
+public class Utils {
 	
 
 	public static JSONObject getJSONfromURL(String url){
@@ -82,4 +80,49 @@ public class Utilities {
 
 		return jArray;
 	} 
+	
+	@TargetApi(11)
+    public static void enableStrictMode() {
+        if (Utils.hasGingerbread()) {
+            StrictMode.ThreadPolicy.Builder threadPolicyBuilder =
+                    new StrictMode.ThreadPolicy.Builder()
+                            .detectAll()
+                            .penaltyLog();
+            StrictMode.VmPolicy.Builder vmPolicyBuilder =
+                    new StrictMode.VmPolicy.Builder()
+                            .detectAll()
+                            .penaltyLog();
+
+            if (Utils.hasHoneycomb()) {
+                threadPolicyBuilder.penaltyFlashScreen();
+                vmPolicyBuilder
+                        .setClassInstanceLimit(MainActivity.class, 1)
+                        .setClassInstanceLimit(MainActivity.class, 1);
+            }
+            StrictMode.setThreadPolicy(threadPolicyBuilder.build());
+            StrictMode.setVmPolicy(vmPolicyBuilder.build());
+        }
+    }
+
+    public static boolean hasFroyo() {
+        // Can use static final constants like FROYO, declared in later versions
+        // of the OS since they are inlined at compile time. This is guaranteed behavior.
+        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.FROYO;
+    }
+
+    public static boolean hasGingerbread() {
+        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD;
+    }
+
+    public static boolean hasHoneycomb() {
+        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB;
+    }
+
+    public static boolean hasHoneycombMR1() {
+        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR1;
+    }
+
+    public static boolean hasJellyBean() {
+        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN;
+    }
 }
