@@ -122,7 +122,7 @@ public class ResultItem {
 		photourl=url;
 	}
 	
-	public void LoadAvatarImage() {
+	/*public void LoadAvatarImage() {
 		if (avatarurl != null && !avatarurl.equals("")) {
 			new AvatarImageLoadTask().execute(avatarurl);
 		}
@@ -190,5 +190,5 @@ public class ResultItem {
 				return null;
 			}
 		}
-	}
+	}*/
 }

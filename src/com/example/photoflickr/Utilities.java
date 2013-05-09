@@ -1,15 +1,16 @@
 package com.example.photoflickr;
 
 import java.io.BufferedReader;
+import java.io.FilterInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
+import org.apache.http.HttpStatus;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONException;
@@ -17,23 +18,11 @@ import org.json.JSONObject;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.http.AndroidHttpClient;
 import android.util.Log;
 
 public class Utilities {
-	public static Bitmap getBitmapFromURL(String src) {
-	    try {
-	        URL url = new URL(src);
-	        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-	        connection.setDoInput(true);
-	        connection.connect();
-	        InputStream input = connection.getInputStream();
-	        Bitmap myBitmap = BitmapFactory.decodeStream(input);
-	        return myBitmap;
-	    } catch (IOException e) {
-	        e.printStackTrace();
-	        return null;
-	    }
-	}
+	
 
 	public static JSONObject getJSONfromURL(String url){
 
@@ -43,15 +32,25 @@ public class Utilities {
 		JSONObject jArray = null;
 
 		//http post
+		final AndroidHttpClient client = AndroidHttpClient.newInstance("Android");
+	    final HttpPost getRequest = new HttpPost(url);
 		try{
-			HttpClient httpclient = new DefaultHttpClient();
-			HttpPost httppost = new HttpPost(url);
-			HttpResponse response = httpclient.execute(httppost);
-			HttpEntity entity = response.getEntity();
-			is = entity.getContent();
-
+		    
+		    HttpResponse response = client.execute(getRequest);
+	        final int statusCode = response.getStatusLine().getStatusCode();
+	        if (statusCode != HttpStatus.SC_OK) { 
+	            Log.e("getJSONfromURL", "Error " + statusCode + " while retrieving bitmap from " + url); 
+	            return null;
+	        }
+	        final HttpEntity entity = response.getEntity();
+	        if (entity != null) {
+	        	is = entity.getContent();
+	        } else {
+	        	return null;
+	        }
 		}catch(Exception e){
-			Log.e("log_tag", "Error in http connection "+e.toString());
+			Log.e("getJSONfromURL", "Error in http connection "+e.toString());
+			return null;
 		}
 
 		//convert response to string
@@ -65,17 +64,22 @@ public class Utilities {
 			is.close();
 			result=sb.toString();
 		}catch(Exception e){
-			Log.e("log_tag", "Error converting result "+e.toString());
-		}
+			Log.e("getJSONfromURL", "Error converting result "+e.toString());
+			return null;
+		} finally {
+	        if (client != null) {
+	            client.close();
+	        }
+	    }
 
 		//try parse the string to a JSON object
 		try{
 	        	jArray = new JSONObject(result);
 		}catch(JSONException e){
-			Log.e("log_tag", "Error parsing data "+e.toString());
+			Log.e("getJSONfromURL", "Error parsing data "+e.toString());
+			return null;
 		}
 
 		return jArray;
 	} 
-
 }

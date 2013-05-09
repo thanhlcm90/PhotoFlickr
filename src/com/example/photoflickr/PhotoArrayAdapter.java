@@ -13,7 +13,8 @@ import android.widget.TextView;
 public class PhotoArrayAdapter extends ArrayAdapter<ResultItem> {
 	private final List<ResultItem> values;
 	private LayoutInflater inflater;
-
+	private final ImageDownloader imageDownloader = new ImageDownloader();
+	
 	static class ViewHolder {
 		public TextView username;
 		public TextView postdate;
@@ -60,8 +61,10 @@ public class PhotoArrayAdapter extends ArrayAdapter<ResultItem> {
 		if (item != null) {
 			holder.username.setText(item.getUsername());
 			holder.postdate.setText(item.getPostDate());
-			holder.avatar.setImageBitmap(item.getAvatarImage());
-			holder.photo.setImageBitmap(item.getPhotoImage());
+			imageDownloader.download(item.getAvatarUrl(), holder.avatar);
+			imageDownloader.download(item.getPhotoUrl(), holder.photo);
+			//holder.avatar.setImageBitmap(item.getAvatarImage());
+			//holder.photo.setImageBitmap(item.getPhotoImage());
 		}
 		return convertView;
 	}

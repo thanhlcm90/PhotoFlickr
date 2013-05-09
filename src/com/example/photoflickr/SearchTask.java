@@ -1,8 +1,11 @@
 package com.example.photoflickr;
 
+import java.lang.ref.WeakReference;
 import java.util.List;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
+
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
@@ -10,7 +13,7 @@ import android.util.Log;
 import android.widget.ListView;
 
 public class SearchTask extends AsyncTask<String, String, Boolean> {
-	List<ResultItem> list;
+	private final WeakReference<List<ResultItem>> listRef;
 	PhotoArrayAdapter adapter;
 	private ProgressDialog dialog;
 	private Context context;
@@ -18,7 +21,7 @@ public class SearchTask extends AsyncTask<String, String, Boolean> {
 
 	public SearchTask(ListView listview, List<ResultItem> list,
 			PhotoArrayAdapter adapter) {
-		this.list = list;
+		this.listRef = new WeakReference<List<ResultItem>>(list);
 		this.adapter = adapter;
 		this.listview = listview;
 		this.context = listview.getContext();
@@ -34,15 +37,18 @@ public class SearchTask extends AsyncTask<String, String, Boolean> {
 
 	@Override
 	protected void onPostExecute(Boolean result) {
-		if (result) {
-			for (int i = 0; i < list.size(); i++) {
-				ResultItem item = list.get(i);
-				item.LoadPhotoImage();
-				new GetDetailTask(item).execute("");
+		if (result && listRef != null) {
+			List<ResultItem> list = listRef.get();
+			if (list != null) {
+				for (int i = 0; i < list.size(); i++) {
+					ResultItem item = list.get(i);
+					//item.LoadPhotoImage();
+					new GetDetailTask(item).execute("");
+				}
+				adapter.notifyDataSetChanged();
+				listview.setSelectionFromTop(
+						MainActivity.currentFirstVisibleItem, 0);
 			}
-			adapter.notifyDataSetChanged();
-			listview.setSelectionFromTop(MainActivity.currentFirstVisibleItem,
-					0);
 		}
 		if (this.dialog.isShowing())
 			this.dialog.dismiss();
@@ -52,37 +58,40 @@ public class SearchTask extends AsyncTask<String, String, Boolean> {
 	@Override
 	protected Boolean doInBackground(String... params) {
 		try {
-			JSONObject result = Utilities.getJSONfromURL(params[0]);
-			if (result != null) {
-				Log.i("SearchApiCall", "Call Successfully");
-				JSONObject photos = result.getJSONObject("photos");
-				// int page = photos.getInt("page");
-				// int pages = photos.getInt("pages");
-				// int total = photos.getInt("total");
-				JSONArray photo = photos.getJSONArray("photo");
+			if (listRef != null) {
+				List<ResultItem> list = listRef.get();
+				JSONObject result = Utilities.getJSONfromURL(params[0]);
+				if (result != null) {
+					Log.i("SearchApiCall", "Call Successfully");
+					JSONObject photos = result.getJSONObject("photos");
+					// int page = photos.getInt("page");
+					// int pages = photos.getInt("pages");
+					// int total = photos.getInt("total");
+					JSONArray photo = photos.getJSONArray("photo");
 
-				for (int i = 0; i < photo.length(); i++) {
-					ResultItem item = new ResultItem(context, adapter);
-					JSONObject e = photo.getJSONObject(i);
+					for (int i = 0; i < photo.length(); i++) {
+						ResultItem item = new ResultItem(context, adapter);
+						JSONObject e = photo.getJSONObject(i);
 
-					// Lay dia chi url cua anh
-					int farm_id = e.getInt("farm");
-					String server_id = e.getString("server");
-					String id = e.getString("id");
-					String secret = e.getString("secret");
-					String photourl = "http://farm" + farm_id
-							+ ".staticflickr.com/" + server_id + "/" + id + "_"
-							+ secret + "_t.jpg";
+						// Lay dia chi url cua anh
+						int farm_id = e.getInt("farm");
+						String server_id = e.getString("server");
+						String id = e.getString("id");
+						String secret = e.getString("secret");
+						String photourl = "http://farm" + farm_id
+								+ ".staticflickr.com/" + server_id + "/" + id
+								+ "_" + secret + "_t.jpg";
 
-					// Lay thong tin nguoi post anh
-					String owner = e.getString("owner");
-					item.setPhotoSecret(secret);
-					item.setUserid(owner);
-					item.setPhotoId(id);
-					item.setPhotoUrl(photourl);
-					list.add(item);
+						// Lay thong tin nguoi post anh
+						String owner = e.getString("owner");
+						item.setPhotoSecret(secret);
+						item.setUserid(owner);
+						item.setPhotoId(id);
+						item.setPhotoUrl(photourl);
+						list.add(item);
+					}
+					return true;
 				}
-				return true;
 			}
 			return false;
 		} catch (Exception e) {
@@ -96,7 +105,7 @@ public class SearchTask extends AsyncTask<String, String, Boolean> {
 		ResultItem item;
 
 		public GetDetailTask(ResultItem item) {
-			this.item=item;
+			this.item = item;
 		}
 
 		@Override
@@ -143,7 +152,7 @@ public class SearchTask extends AsyncTask<String, String, Boolean> {
 		@Override
 		protected void onPostExecute(Boolean result) {
 			if (result) {
-				item.LoadAvatarImage();
+				//item.LoadAvatarImage();
 				adapter.notifyDataSetChanged();
 			}
 

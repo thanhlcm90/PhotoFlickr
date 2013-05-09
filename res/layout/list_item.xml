@@ -15,13 +15,27 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:contentDescription="@string/avatar" />
-        <TextView android:id="@+id/username"
-            android:layout_margin="5dp"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:textIsSelectable="false">
-        </TextView>
+        <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/username"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textIsSelectable="false" >
+                </TextView>
+                
+                <TextView
+                    android:id="@+id/location"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textIsSelectable="false" >
+                </TextView>
+            </LinearLayout>
         <TextView android:id="@+id/postdate"
             android:layout_margin="5dp"
             android:layout_width="wrap_content"

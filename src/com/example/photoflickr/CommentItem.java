@@ -62,7 +62,7 @@ public class CommentItem {
 		avatarurl= url;
 	}
 
-	public void LoadAvatarImage() {
+	/*public void LoadAvatarImage() {
 		if (avatarurl != null && !avatarurl.equals("")) {
 			new AvatarImageLoadTask().execute(avatarurl);
 		}
@@ -95,5 +95,5 @@ public class CommentItem {
 				return null;
 			}
 		}
-	}
+	}*/
 }

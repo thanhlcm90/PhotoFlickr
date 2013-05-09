@@ -18,8 +18,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 public class DetailActivity extends Activity {
-	ImageView img_photo;
+	//ImageView img_photo;
 	static ArrayList<CommentItem> list = new ArrayList<CommentItem>();
+	private final ImageDownloader imageDownloader = new ImageDownloader();
 	CommentArrayAdapter adapter;
 	
 	@Override
@@ -60,7 +61,7 @@ public class DetailActivity extends Activity {
 		TextView tv_postdate = (TextView) header_view.findViewById(R.id.postdate);
 		TextView tv_description = (TextView) header_view.findViewById(R.id.description);
 		ImageView img_avatar =(ImageView) header_view.findViewById(R.id.avatar);
-		img_photo = (ImageView) header_view.findViewById(R.id.photo);
+		ImageView img_photo = (ImageView) header_view.findViewById(R.id.photo);
 		
 		tv_username.setText(username);
 		tv_fullname.setText(fullname);
@@ -71,7 +72,8 @@ public class DetailActivity extends Activity {
 		tv_description.setText(description);
 		img_avatar.setImageBitmap(avatar);
 		
-		new LoadPhotoTask(this).execute(photo);
+		//new LoadPhotoTask(this).execute(photo);
+		imageDownloader.download(photo, img_photo);
 		new LoadCommentTask(comment_list, list, adapter).execute(photoid);
 	}
 
@@ -82,7 +84,7 @@ public class DetailActivity extends Activity {
 		return true;
 	}
 	
-	private class LoadPhotoTask extends AsyncTask<String, String, Bitmap> {
+	/*private class LoadPhotoTask extends AsyncTask<String, String, Bitmap> {
 		private Context context;
 		public LoadPhotoTask(Context context) {
 			this.context=context;
@@ -106,7 +108,7 @@ public class DetailActivity extends Activity {
 				return null;
 			}
 		}	
-	}
+	}*/
 	
 	
 }
