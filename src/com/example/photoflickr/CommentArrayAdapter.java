@@ -11,7 +11,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 public class CommentArrayAdapter extends ArrayAdapter<CommentItem> {
-	private final ImageDownloader imageDownloader = new ImageDownloader();
 	private final List<CommentItem> values;
 	private LayoutInflater inflater;
 
@@ -59,7 +58,7 @@ public class CommentArrayAdapter extends ArrayAdapter<CommentItem> {
 		if (item != null) {
 			holder.username.setText(item.getUsername());
 			holder.comment.setText(item.getComment());
-			imageDownloader.download(item.getAvatarUrl(), holder.avatar);
+			MainActivity.imageDownloader.download(item.getAvatarUrl(), holder.avatar);
 			//holder.avatar.setImageBitmap(item.getAvatarImage());
 		}
 		return convertView;

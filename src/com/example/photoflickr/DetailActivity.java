@@ -20,7 +20,6 @@ import android.widget.TextView;
 public class DetailActivity extends Activity {
 	//ImageView img_photo;
 	static ArrayList<CommentItem> list = new ArrayList<CommentItem>();
-	private final ImageDownloader imageDownloader = new ImageDownloader();
 	CommentArrayAdapter adapter;
 	
 	@Override
@@ -35,10 +34,10 @@ public class DetailActivity extends Activity {
 		String postdate= intent.getStringExtra(MainActivity.EXTRA_ITEM_POSTDATE);
 		String title= intent.getStringExtra(MainActivity.EXTRA_ITEM_TITLE);
 		String description= intent.getStringExtra(MainActivity.EXTRA_ITEM_DESCRIPTION);
-		Bitmap avatar = (Bitmap) intent.getParcelableExtra(MainActivity.EXTRA_ITEM_AVATAR );
+		String avatar = intent.getStringExtra(MainActivity.EXTRA_ITEM_AVATAR_URL );
 		String photo = intent.getStringExtra(MainActivity.EXTRA_ITEM_PHOTO_URL);
 		// Xu ly lai URL, get Anh lon (240pX)
-		photo=photo.replace("_t.jpg", "_m.jpg");
+		//photo=photo.replace("_m.jpg", "_m.jpg");
 		String photoid = intent.getStringExtra(MainActivity.EXTRA_ITEM_PHOTO_ID);
 		
 		final ListView comment_list = (ListView) findViewById(R.id.comment_list);
@@ -70,10 +69,10 @@ public class DetailActivity extends Activity {
 		//tv_title.setText(title);
 		setTitle(title);
 		tv_description.setText(description);
-		img_avatar.setImageBitmap(avatar);
+		MainActivity.imageDownloader.download(avatar, img_avatar);
 		
 		//new LoadPhotoTask(this).execute(photo);
-		imageDownloader.download(photo, img_photo);
+		MainActivity.imageDownloader.download(photo, img_photo);
 		new LoadCommentTask(comment_list, list, adapter).execute(photoid);
 	}
 

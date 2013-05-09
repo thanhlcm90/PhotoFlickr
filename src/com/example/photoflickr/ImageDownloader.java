@@ -37,8 +37,8 @@ public class ImageDownloader {
 	 *            The ImageView to bind the downloaded image to.
 	 */
 	public void download(String url, ImageView imageView) {
-		Log.i(LOG_TAG,"download:" + url);
-		resetPurgeTimer();
+		if (url==null || url.equals("")) return;
+		//resetPurgeTimer();
 		Bitmap bitmap = getBitmapFromCache(url);
 
 		if (bitmap == null) {
@@ -269,7 +269,7 @@ public class ImageDownloader {
 	 * aggressively cleared by the Garbage Collector.
 	 */
 
-	private static final int HARD_CACHE_CAPACITY = 10;
+	private static final int HARD_CACHE_CAPACITY = 100;
 	private static final int DELAY_BEFORE_PURGE = 10 * 1000; // in milliseconds
 
 	// Hard cache, with a fixed maximum capacity and a life duration

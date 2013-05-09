@@ -13,10 +13,10 @@ import android.widget.TextView;
 public class PhotoArrayAdapter extends ArrayAdapter<ResultItem> {
 	private final List<ResultItem> values;
 	private LayoutInflater inflater;
-	private final ImageDownloader imageDownloader = new ImageDownloader();
 	
 	static class ViewHolder {
 		public TextView username;
+		public TextView location;
 		public TextView postdate;
 		public ImageView avatar;
 		public ImageView photo;
@@ -49,6 +49,7 @@ public class PhotoArrayAdapter extends ArrayAdapter<ResultItem> {
 			holder = new ViewHolder();
 			holder.avatar = (ImageView) rowView.findViewById(R.id.avatar);
 			holder.username = (TextView) rowView.findViewById(R.id.username);
+			holder.location= (TextView) rowView.findViewById(R.id.location);
 			holder.postdate = (TextView) rowView.findViewById(R.id.postdate);
 			holder.photo = (ImageView) rowView.findViewById(R.id.photo);
 			convertView = rowView;
@@ -60,9 +61,10 @@ public class PhotoArrayAdapter extends ArrayAdapter<ResultItem> {
 
 		if (item != null) {
 			holder.username.setText(item.getUsername());
+			holder.location.setText(item.getLocation());
 			holder.postdate.setText(item.getPostDate());
-			imageDownloader.download(item.getAvatarUrl(), holder.avatar);
-			imageDownloader.download(item.getPhotoUrl(), holder.photo);
+			MainActivity.imageDownloader.download(item.getAvatarUrl(), holder.avatar);
+			MainActivity.imageDownloader.download(item.getPhotoUrl(), holder.photo);
 			//holder.avatar.setImageBitmap(item.getAvatarImage());
 			//holder.photo.setImageBitmap(item.getPhotoImage());
 		}

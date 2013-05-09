@@ -24,9 +24,11 @@ public class MainActivity extends Activity {
 	public final static String EXTRA_ITEM_TITLE = "com.example.photoflickr.ITEM.TITLE";
 	public final static String EXTRA_ITEM_DESCRIPTION = "com.example.photoflickr.ITEM.DESCRIPTION";
 	public final static String EXTRA_ITEM_POSTDATE = "com.example.photoflickr.ITEM.POSTDATE";
-	public final static String EXTRA_ITEM_AVATAR = "com.example.photoflickr.ITEM.AVATAR";
+	public final static String EXTRA_ITEM_AVATAR_URL = "com.example.photoflickr.ITEM.AVATAR_URL";
 	public final static String EXTRA_ITEM_PHOTO_URL = "com.example.photoflickr.ITEM.PHOTO_URL";
 	public final static String EXTRA_ITEM_PHOTO_ID = "com.example.photoflickr.ITEM.PHOTO_ID";
+
+	public static final ImageDownloader imageDownloader = new ImageDownloader();
 	
 	static Boolean loadingMore = false;
 	int per_page = 5;
@@ -89,7 +91,7 @@ public class MainActivity extends Activity {
 				intent.putExtra(EXTRA_ITEM_TITLE, item.getTitle());
 				intent.putExtra(EXTRA_ITEM_DESCRIPTION, item.getDescription());
 				intent.putExtra(EXTRA_ITEM_POSTDATE, item.getPostDate());
-				intent.putExtra(EXTRA_ITEM_AVATAR, item.getAvatarImage());
+				intent.putExtra(EXTRA_ITEM_AVATAR_URL, item.getAvatarUrl());
 				intent.putExtra(EXTRA_ITEM_PHOTO_URL, item.getPhotoUrl());
 				intent.putExtra(EXTRA_ITEM_PHOTO_ID, item.getPhotoId());
 				startActivity(intent);

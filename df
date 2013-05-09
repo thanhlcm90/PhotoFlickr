@@ -1,0 +1,48 @@
+* commit 1a9791729d464538a769abf1bd9fb1110bdd6ef1
+| Author: Thanh Le <thanhlcm90@gmail.com>
+| Date:   Thu May 9 11:32:26 2013 +0700
+| 
+|     Toi uu hoa load Image
+|  
+* commit 30fec35b6b5e769d6f77b5971a94eca37a0aae42
+| Author: Thanh Le <thanhlcm90@gmail.com>
+| Date:   Wed May 8 18:10:28 2013 +0700
+| 
+|     Final with asynctask per result
+|    
+*   commit 96b6bc925096014469285d2df3083dfbb8063fa4
+|\  Merge: 77dfaf7 5140cb6
+| | Author: Thanh Le <thanhlcm90@gmail.com>
+| | Date:   Wed May 8 17:27:45 2013 +0700
+| | 
+| |     Merge branch 'master' of https://github.com/thanhlcm90/PhotoFlickr into prototype
+| |   
+| * commit 5140cb666ea66b02b6fac2e86b0b548f09dcd411
+|   Author: thanhlcm90 <thanh3em@gmail.com>
+|   Date:   Wed May 8 03:27:09 2013 -0700
+|   
+|       Initial commit
+|  
+* commit 77dfaf73d2028defeba3c4c175ea9f94ebb27758
+| Author: Thanh Le <thanhlcm90@gmail.com>
+| Date:   Wed May 8 17:18:51 2013 +0700
+| 
+|     Final 1
+|  
+* commit f0d12b12f81832edcf3b2acbcbf61f9802fe85d7
+| Author: Thanh Le <thanhlcm90@gmail.com>
+| Date:   Wed May 8 15:01:27 2013 +0700
+| 
+|     Commit with detail
+|  
+* commit 427ca180a7e351b9a93bbe679d2e6e8a7aac11e0
+| Author: Thanh Le <thanhlcm90@gmail.com>
+| Date:   Wed May 8 10:16:11 2013 +0700
+| 
+|     SearchApiCall load task per item list
+|  
+* commit 195654c57bedc8e4915c98f20ca6d3a13a69da61
+  Author: Thanh Le <thanhlcm90@gmail.com>
+  Date:   Tue May 7 11:11:38 2013 +0700
+  
+      Init Commit

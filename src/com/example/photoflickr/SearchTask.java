@@ -80,7 +80,7 @@ public class SearchTask extends AsyncTask<String, String, Boolean> {
 						String secret = e.getString("secret");
 						String photourl = "http://farm" + farm_id
 								+ ".staticflickr.com/" + server_id + "/" + id
-								+ "_" + secret + "_t.jpg";
+								+ "_" + secret + "_m.jpg";
 
 						// Lay thong tin nguoi post anh
 						String owner = e.getString("owner");
