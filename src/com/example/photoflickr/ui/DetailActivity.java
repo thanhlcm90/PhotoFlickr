@@ -20,6 +20,7 @@ public class DetailActivity extends FragmentActivity {
 	private static ImageFetcher mImageFetcher;
 	private ViewPager mPager;
 	private DetailPagerAdapter mAdapter;
+	public static int current_page;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		/*
@@ -49,7 +50,26 @@ public class DetailActivity extends FragmentActivity {
 		if (Utils.hasHoneycomb()) {
 			mPager.setPageTransformer(true, new ZoomOutPageTransformer());
 		}
-		
+		mPager.setOnPageChangeListener(new OnPageChangeListener() {
+			
+			@Override
+			public void onPageSelected(int arg0) {
+				current_page=arg0;
+			}
+
+			@Override
+			public void onPageScrollStateChanged(int arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void onPageScrolled(int arg0, float arg1, int arg2) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+
 		final int extraCurrentItem = getIntent().getIntExtra(
 				MainFragement.EXTRA_ITEM_POSITION, -1);
 		if (extraCurrentItem != -1) {

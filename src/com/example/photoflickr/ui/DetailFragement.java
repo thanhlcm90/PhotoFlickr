@@ -148,8 +148,9 @@ public class DetailFragement extends Fragment {
 
 		getActivity().setTitle(title);
 		MainFragement.getPhotoFetcher().loadImage(photo, img_photo);
-		new TaskLoadComment(comment_list, list, adapter, loading)
-				.execute(photoid);
+		if (pos == DetailActivity.current_page)
+			new TaskLoadComment(comment_list, list, adapter, loading)
+					.execute(photoid);
 
 		img_photo.setOnClickListener(new OnClickListener() {
 
