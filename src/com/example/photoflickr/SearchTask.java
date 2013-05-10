@@ -126,6 +126,12 @@ public class SearchTask extends AsyncTask<String, String, Boolean> {
 				String description = photoInfo.getJSONObject("description")
 						.getString("_content");
 
+				// Xu ly lai ngay than theo dinh dang dd/MM/yyyy HH:mm:ss
+				if (takendate != null && !takendate.equals("")) {
+					String[] datetimes = takendate.split(" ");
+					String[] date = datetimes[0].split("-");
+					takendate=date[2] + "/" + date[1] + "/" + date[0] + " " + datetimes[1];
+				}
 				item.setPostDate(takendate);
 				item.setUsername(username);
 				item.setFullname(fullname);
