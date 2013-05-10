@@ -15,10 +15,12 @@ import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.ProgressBar;
+
 import com.example.photoflickr.PhotoArrayAdapter;
 import com.example.photoflickr.R;
 import com.example.photoflickr.ResultItem;
-import com.example.photoflickr.SearchTask;
+import com.example.photoflickr.TaskSearch;
 import com.example.photoutil.ImageCache.ImageCacheParams;
 import com.example.photoutil.ImageFetcher;
 
@@ -57,12 +59,14 @@ public class MainFragement extends Fragment {
 		// Khoi tao Avatar Fetch
 		mAvatarFetcher = new ImageFetcher(getActivity(), mAvatarThumbSize);
 		mAvatarFetcher.setLoadingImage(R.drawable.no_avatar);
-		mAvatarFetcher.addImageCache(getActivity().getSupportFragmentManager(), cacheParams);
-		
+		mAvatarFetcher.addImageCache(getActivity().getSupportFragmentManager(),
+				cacheParams);
+
 		// Khoi tao Photo Fetch
-		mPhotoFetcher= new ImageFetcher(getActivity(), mPhotoThumbSize);
+		mPhotoFetcher = new ImageFetcher(getActivity(), mPhotoThumbSize);
 		mPhotoFetcher.setLoadingImage(R.drawable.no_image_available);
-		mPhotoFetcher.addImageCache(getActivity().getSupportFragmentManager(), cacheParams);
+		mPhotoFetcher.addImageCache(getActivity().getSupportFragmentManager(),
+				cacheParams);
 
 	}
 
@@ -71,6 +75,8 @@ public class MainFragement extends Fragment {
 			Bundle savedInstanceState) {
 		final View v = inflater.inflate(R.layout.fragement_main, container,
 				false);
+		View footer_view = inflater.inflate(R.layout.list_footer, null, false);
+		final ProgressBar loading = (ProgressBar) footer_view.findViewById(R.id.loading);
 		// Bat su kien key Enter cua Edit Text
 		final EditText keyword = (EditText) v.findViewById(R.id.keyword);
 		keyword.setOnKeyListener(new OnKeyListener() {
@@ -87,15 +93,15 @@ public class MainFragement extends Fragment {
 							+ "&per_page="
 							+ per_page
 							+ "&page="
-							+ page + "&format=json&nojsoncallback=1";
-					new SearchTask(photoView, list, adapter).execute(url);
+							+ page
+							+ "&sort=interestingness-desc&accuracy=1&content_type=7&format=json&nojsoncallback=1";
+					new TaskSearch(photoView, list, adapter,null).execute(url);
 				}
 				return false;
 			}
 		});
 
 		photoView = (ListView) v.findViewById(R.id.photoView);
-		View footer_view = inflater.inflate(R.layout.list_footer, null, false);
 		photoView.addFooterView(footer_view);
 		adapter = new PhotoArrayAdapter(this.getActivity(), list);
 		photoView.setAdapter(adapter);
@@ -121,12 +127,12 @@ public class MainFragement extends Fragment {
 			public void onScrollStateChanged(AbsListView view, int scrollState) {
 				this.currentScrollState = scrollState;
 				if (scrollState == AbsListView.OnScrollListener.SCROLL_STATE_FLING) {
-                    mAvatarFetcher.setPauseWork(true);
-                    mPhotoFetcher.setPauseWork(true);
-                } else {
-                	mAvatarFetcher.setPauseWork(false);
-                    mPhotoFetcher.setPauseWork(false);
-                }
+					mAvatarFetcher.setPauseWork(true);
+					mPhotoFetcher.setPauseWork(true);
+				} else {
+					mAvatarFetcher.setPauseWork(false);
+					mPhotoFetcher.setPauseWork(false);
+				}
 				this.isScrollCompleted();
 			}
 
@@ -146,7 +152,7 @@ public class MainFragement extends Fragment {
 							+ per_page
 							+ "&page="
 							+ page + "&format=json&nojsoncallback=1";
-					new SearchTask(photoView, list, adapter).execute(url);
+					new TaskSearch(photoView, list, adapter,loading).execute(url);
 				}
 			}
 
@@ -162,40 +168,33 @@ public class MainFragement extends Fragment {
 		return v;
 	}
 
-	/*@Override
-    public void onResume() {
-        super.onResume();
-        mAvatarFetcher.setExitTasksEarly(false);
-        mPhotoFetcher.setExitTasksEarly(false);
-        adapter.notifyDataSetChanged();
-    }
+	/*
+	 * @Override public void onResume() { super.onResume();
+	 * mAvatarFetcher.setExitTasksEarly(false);
+	 * mPhotoFetcher.setExitTasksEarly(false); adapter.notifyDataSetChanged(); }
+	 * 
+	 * @Override public void onPause() { super.onPause();
+	 * 
+	 * mAvatarFetcher.setPauseWork(false);
+	 * mAvatarFetcher.setExitTasksEarly(true); mAvatarFetcher.flushCache();
+	 * 
+	 * mPhotoFetcher.setPauseWork(false); mPhotoFetcher.setExitTasksEarly(true);
+	 * mPhotoFetcher.flushCache(); }
+	 */
 
-    @Override
-    public void onPause() {
-        super.onPause();
-        
-        mAvatarFetcher.setPauseWork(false);
-        mAvatarFetcher.setExitTasksEarly(true);
-        mAvatarFetcher.flushCache();
-        
-        mPhotoFetcher.setPauseWork(false);
-        mPhotoFetcher.setExitTasksEarly(true);
-        mPhotoFetcher.flushCache();
-    }*/
+	@Override
+	public void onDestroy() {
+		super.onDestroy();
+		mAvatarFetcher.closeCache();
+		mPhotoFetcher.closeCache();
+	}
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        mAvatarFetcher.closeCache();
-        mPhotoFetcher.closeCache();
-    }
-    
-    public static ImageFetcher getAvatarFetcher() {
-        return mAvatarFetcher;
-    }
-    
-    public static ImageFetcher getPhotoFetcher() {
-        return mPhotoFetcher;
-    }
+	public static ImageFetcher getAvatarFetcher() {
+		return mAvatarFetcher;
+	}
+
+	public static ImageFetcher getPhotoFetcher() {
+		return mPhotoFetcher;
+	}
 
 }

@@ -21,6 +21,7 @@ public class PhotoArrayAdapter extends ArrayAdapter<ResultItem> {
 		public TextView username;
 		public TextView location;
 		public TextView postdate;
+		public TextView viewcount;
 		public ImageView avatar;
 		public ImageView photo;
 	}
@@ -54,6 +55,7 @@ public class PhotoArrayAdapter extends ArrayAdapter<ResultItem> {
 			holder.username = (TextView) rowView.findViewById(R.id.username);
 			holder.location= (TextView) rowView.findViewById(R.id.location);
 			holder.postdate = (TextView) rowView.findViewById(R.id.postdate);
+			holder.viewcount = (TextView) rowView.findViewById(R.id.viewcount);
 			holder.photo = (ImageView) rowView.findViewById(R.id.photo);
 			convertView = rowView;
 			convertView.setTag(holder);
@@ -66,6 +68,7 @@ public class PhotoArrayAdapter extends ArrayAdapter<ResultItem> {
 			holder.username.setText(item.getUsername());
 			holder.location.setText(item.getLocation());
 			holder.postdate.setText(item.getPostDate());
+			holder.viewcount.setText("Views: " + item.getViewCount());
 			MainFragement.getAvatarFetcher().loadImage(item.getAvatarUrl(), holder.avatar);
 			MainFragement.getPhotoFetcher().loadImage(item.getPhotoUrl(), holder.photo);
 			//holder.avatar.setImageBitmap(item.getAvatarImage());

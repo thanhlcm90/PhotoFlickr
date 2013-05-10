@@ -2,37 +2,51 @@ package com.example.photoflickr;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
-import com.example.photoflickr.ui.MainFragement;
-import com.example.photoutil.Utils;
+
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.view.View;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 
-public class SearchTask extends AsyncTask<String, String, Boolean> {
+import com.example.photoflickr.ui.MainFragement;
+import com.example.photoutil.Utils;
+
+public class TaskSearch extends AsyncTask<String, String, Boolean> {
 	private final WeakReference<List<ResultItem>> listRef;
 	PhotoArrayAdapter adapter;
 	private ProgressDialog dialog;
+	private ProgressBar loading = null;
 	private Context context;
 	private ListView listview;
 
-	public SearchTask(ListView listview, List<ResultItem> list,
-			PhotoArrayAdapter adapter) {
+	public TaskSearch(ListView listview, List<ResultItem> list,
+			PhotoArrayAdapter adapter, ProgressBar loading) {
 		this.listRef = new WeakReference<List<ResultItem>>(list);
 		this.adapter = adapter;
 		this.listview = listview;
 		this.context = listview.getContext();
-		this.dialog = new ProgressDialog(this.context);
+		if (loading == null) {
+			this.dialog = new ProgressDialog(this.context);
+		} else {
+			this.loading = loading;
+		}
 	}
 
 	@Override
 	protected void onPreExecute() {
 		MainFragement.loadingMore = true;
-		this.dialog.setMessage("Seaching...");
-		this.dialog.show();
+		if (loading == null) {
+			this.dialog.setMessage("Seaching...");
+			this.dialog.show();
+		} else {
+			loading.setVisibility(View.VISIBLE);
+		}
 	}
 
 	@Override
@@ -42,7 +56,7 @@ public class SearchTask extends AsyncTask<String, String, Boolean> {
 			if (list != null) {
 				for (int i = 0; i < list.size(); i++) {
 					ResultItem item = list.get(i);
-					//item.LoadPhotoImage();
+					// item.LoadPhotoImage();
 					new GetDetailTask(item).execute("");
 				}
 				adapter.notifyDataSetChanged();
@@ -50,8 +64,12 @@ public class SearchTask extends AsyncTask<String, String, Boolean> {
 						MainFragement.currentFirstVisibleItem, 0);
 			}
 		}
-		if (this.dialog.isShowing())
-			this.dialog.dismiss();
+		if (loading == null) {
+			if (this.dialog.isShowing())
+				this.dialog.dismiss();
+		} else {
+			loading.setVisibility(View.GONE);
+		}
 		MainFragement.loadingMore = false;
 	}
 
@@ -119,6 +137,7 @@ public class SearchTask extends AsyncTask<String, String, Boolean> {
 								+ "&format=json&nojsoncallback=1");
 				JSONObject photoInfo = json.getJSONObject("photo");
 				JSONObject person = photoInfo.getJSONObject("owner");
+				String viewcount = photoInfo.getString("views");
 				String username = person.getString("username");
 				String fullname = person.getString("realname");
 				String location = person.getString("location");
@@ -139,15 +158,18 @@ public class SearchTask extends AsyncTask<String, String, Boolean> {
 				if (takendate != null && !takendate.equals("")) {
 					String[] datetimes = takendate.split(" ");
 					String[] date = datetimes[0].split("-");
-					takendate=date[2] + "/" + date[1] + "/" + date[0] + " " + datetimes[1];
+					takendate = date[2] + "/" + date[1] + "/" + date[0] + " "
+							+ datetimes[1];
 				}
 				item.setPostDate(takendate);
 				item.setUsername(username);
 				item.setFullname(fullname);
 				item.setLocation(location);
 				item.setTitle(title);
+				item.setViewCount(viewcount);
 				item.setDescription(description);
 				item.setAvatarUrl(avatarurl);
+				item.isLoaded = true;
 				return true;
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -158,7 +180,7 @@ public class SearchTask extends AsyncTask<String, String, Boolean> {
 		@Override
 		protected void onPostExecute(Boolean result) {
 			if (result) {
-				//item.LoadAvatarImage();
+				// item.LoadAvatarImage();
 				adapter.notifyDataSetChanged();
 			}
 

@@ -22,6 +22,8 @@ public class ResultItem {
 	private Context context;
 	private Bitmap avatar;
 	private Bitmap photo;
+	private String viewcount;
+	public boolean isLoaded;
 		
 	public ResultItem(Context context, PhotoArrayAdapter adapter){
 		this.avatarurl="";
@@ -32,6 +34,7 @@ public class ResultItem {
 		this.context = context;
 		this.photo=null;
 		this.avatar=null;
+		isLoaded=false;
 	}
 	
 	public String getUserid() {
@@ -83,6 +86,13 @@ public class ResultItem {
 		description=value;
 	}
 
+	public String getViewCount() {
+		return viewcount;
+	}
+	public void setViewCount(String value) {
+		viewcount=value;
+	}
+	
 	public PhotoArrayAdapter getAdapter() {
 		return adapter;
 	}

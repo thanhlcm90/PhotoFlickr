@@ -54,27 +54,26 @@
                 android:id="@+id/postdate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
                 android:textIsSelectable="false"
                 android:textSize="12sp" >
             </TextView>
             <TextView
-                android:id="@+id/view_number"
+                android:id="@+id/viewcount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
                 android:textIsSelectable="false"
                 android:textSize="12sp" >
             </TextView>
         </LinearLayout>
     </LinearLayout>
-
-    <ImageView
+	
+    <ImageButton
         android:id="@+id/photo"
         android:layout_width="240dp"
         android:layout_height="240dp"
         android:layout_gravity="center_horizontal"
         android:layout_margin="5dp"
+        android:scaleType="centerCrop"
         android:contentDescription="@string/photo" />
 
     <TextView
@@ -93,5 +92,5 @@
         android:text="@string/comment"
         android:textIsSelectable="false" >
     </TextView>
-
+    
 </LinearLayout>

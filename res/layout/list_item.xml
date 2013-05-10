@@ -11,46 +11,63 @@
 
         <ImageView
             android:id="@+id/avatar"
-            android:layout_margin="5dp"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:contentDescription="@string/avatar" />
-        <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:layout_weight="1"
-                android:orientation="vertical" >
-
-                <TextView
-                    android:id="@+id/username"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textIsSelectable="false" >
-                </TextView>
-                
-                <TextView
-                    android:id="@+id/location"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textIsSelectable="false" >
-                </TextView>
-            </LinearLayout>
-        <TextView android:id="@+id/postdate"
             android:layout_margin="5dp"
+            android:contentDescription="@string/avatar" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/username"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textIsSelectable="false" >
+            </TextView>
+
+            <TextView
+                android:id="@+id/location"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textIsSelectable="false" >
+            </TextView>
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textIsSelectable="false"
-            android:textSize="12sp">
-        </TextView>        
+            android:layout_margin="5dp"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/postdate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textIsSelectable="false"
+                android:textSize="12sp" >
+            </TextView>
+
+            <TextView
+                android:id="@+id/viewcount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textIsSelectable="false"
+                android:textSize="12sp" >
+            </TextView>
+        </LinearLayout>
     </LinearLayout>
 
     <ImageView
         android:id="@+id/photo"
-        android:layout_margin="5dp"
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:layout_gravity="center_horizontal"
+        android:layout_margin="5dp"
         android:contentDescription="@string/photo" />
 
 </LinearLayout>

@@ -7,7 +7,11 @@
     <string name="keyword">Keyword</string>
     <string name="avatar">Avatar</string>
     <string name="photo">Photo</string>
-    <string name="title_activity_detail">DetailActivity</string>
-	<string name="comment">Comments for this Photo:</string>
-	<string name="no_network_connection_toast">No network connection found</string>
+    <string name="title_activity_detail">Detail Information</string>
+    <string name="comment">Comments for this Photo:</string>
+    <string name="no_network_connection_toast">No network connection found</string>
+    <string name="description_zoom_touch_close">Touch to close</string>
+    <string name="title_activity_image_show">Detail Image</string>
+    <string name="loading">Loading more result ...</string>
+
 </resources>

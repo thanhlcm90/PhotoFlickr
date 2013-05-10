@@ -11,18 +11,29 @@ import com.example.photoutil.Utils;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.view.View;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 
-public class LoadCommentTask extends AsyncTask<String, String, Boolean> {
+public class TaskLoadComment extends AsyncTask<String, String, Boolean> {
 	private final WeakReference<List<CommentItem>> listRef;
+	private Boolean bStop;
 	CommentArrayAdapter adapter;
 	private Context context;
+	private ProgressBar loading = null;
 
-	public LoadCommentTask(ListView listview, List<CommentItem> list,
-			CommentArrayAdapter adapter) {
+	public TaskLoadComment(ListView listview, List<CommentItem> list,
+			CommentArrayAdapter adapter,ProgressBar loading) {
 		this.listRef = new WeakReference<List<CommentItem>>(list);
 		this.adapter = adapter;
 		this.context = listview.getContext();
+		this.loading = loading;
+		bStop=false;
+	}
+
+	@Override
+	protected void onPreExecute() {
+		loading.setVisibility(View.VISIBLE);
 	}
 
 	@Override
@@ -36,12 +47,13 @@ public class LoadCommentTask extends AsyncTask<String, String, Boolean> {
 			adapter.notifyDataSetChanged();
 			// listview.setSelectionFromTop(0,0);
 		}
+		loading.setVisibility(View.GONE);
 	}
 
 	@Override
 	protected Boolean doInBackground(String... params) {
 		try {
-			if (listRef != null) {
+			if (listRef != null && !bStop) {
 				List<CommentItem> list = listRef.get();
 				String photoId = params[0];
 				String url = "http://api.flickr.com/services/rest/?method=flickr.photos.comments.getList&api_key=63a95e8826699c2e7f401a3288bf20cf&photo_id="
@@ -51,6 +63,7 @@ public class LoadCommentTask extends AsyncTask<String, String, Boolean> {
 					JSONObject comments = result.getJSONObject("comments");
 					JSONArray commentArray = comments.getJSONArray("comment");
 					for (int i = 0; i < commentArray.length(); i++) {
+						if (bStop) return true;
 						CommentItem item = new CommentItem(context, adapter);
 						JSONObject e = commentArray.getJSONObject(i);
 						String owner = e.getString("author");
@@ -76,4 +89,12 @@ public class LoadCommentTask extends AsyncTask<String, String, Boolean> {
 			return false;
 		}
 	}
+
+	@Override
+	protected void onCancelled() {
+		// TODO Auto-generated method stub
+		super.onCancelled();
+		bStop=true;
+	}
+	
 }
