@@ -9,13 +9,13 @@
 	android:orientation="vertical"
     tools:context=".MainActivity" >
 
-    <EditText android:id="@+id/keyword"
+    <org.holoeverywhere.widget.EditText android:id="@+id/keyword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/keyword" 
         android:singleLine="true"/>
-	<ListView android:id="@+id/photoView"
+	<org.holoeverywhere.widget.ListView android:id="@+id/photoView"
 	    android:layout_width="match_parent"
 	    android:layout_height="fill_parent"
-	    ></ListView>
+	    />
 </LinearLayout>

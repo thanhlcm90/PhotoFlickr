@@ -27,6 +27,7 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.actionbarsherlock.app.SherlockFragment;
 import com.example.photoflickr.CommentArrayAdapter;
 import com.example.photoflickr.CommentItem;
 import com.example.photoflickr.TaskLoadComment;
@@ -36,7 +37,7 @@ import com.example.photoutil.ImageFetcher;
 import com.example.photoutil.Utils;
 
 @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
-public class DetailFragement extends Fragment {
+public class DetailFragement extends SherlockFragment {
 	private final String TAG = "DetailFragement";
 	public final static String EXTRA_ITEM_POSITION = "com.example.photoflickr.ITEM.POSITION";
 	public final static String EXTRA_ITEM_USERNAME = "com.example.photoflickr.ITEM.USERNAME";

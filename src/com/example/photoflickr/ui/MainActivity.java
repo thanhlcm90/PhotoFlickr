@@ -4,11 +4,12 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 
+import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.example.photoflickr.BuildConfig;
 import com.example.photoflickr.R;
 import com.example.photoutil.Utils;
 
-public class MainActivity extends FragmentActivity {
+public class MainActivity extends SherlockFragmentActivity {
 	private static final String TAG = "MainActivity";
 
 	@Override

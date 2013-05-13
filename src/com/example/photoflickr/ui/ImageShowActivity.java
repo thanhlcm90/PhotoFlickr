@@ -5,9 +5,10 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.webkit.WebView;
 
+import com.actionbarsherlock.app.SherlockActivity;
 import com.example.photoflickr.R;
 
-public class ImageShowActivity extends Activity {
+public class ImageShowActivity extends SherlockActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -27,13 +28,6 @@ public class ImageShowActivity extends Activity {
 		} catch (Exception e) {  
 		    e.printStackTrace();  
 		}  
-	}
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.image_show, menu);
-		return true;
 	}
 
 }

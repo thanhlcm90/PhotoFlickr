@@ -8,13 +8,14 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 
+import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.example.photoflickr.R;
 import com.example.photoflickr.transformer.ZoomOutPageTransformer;
 import com.example.photoutil.ImageCache;
 import com.example.photoutil.ImageFetcher;
 import com.example.photoutil.Utils;
 
-public class DetailActivity extends FragmentActivity {
+public class DetailActivity extends SherlockFragmentActivity {
 	private static final String IMAGE_CACHE_DIR = "images";
 	private int mAvatarThumbSize;
 	private static ImageFetcher mImageFetcher;

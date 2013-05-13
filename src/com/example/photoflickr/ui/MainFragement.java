@@ -17,6 +17,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 
+import com.actionbarsherlock.app.SherlockFragment;
 import com.example.photoflickr.PhotoArrayAdapter;
 import com.example.photoflickr.R;
 import com.example.photoflickr.ResultItem;
@@ -24,7 +25,7 @@ import com.example.photoflickr.TaskSearch;
 import com.example.photoutil.ImageCache.ImageCacheParams;
 import com.example.photoutil.ImageFetcher;
 
-public class MainFragement extends Fragment {
+public class MainFragement extends SherlockFragment {
 	public final static String EXTRA_ITEM_POSITION = "com.example.photoflickr.ITEM.POSITION";
 
 	private static ImageFetcher mAvatarFetcher, mPhotoFetcher;
