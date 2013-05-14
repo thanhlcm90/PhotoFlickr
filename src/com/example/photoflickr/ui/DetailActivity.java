@@ -1,14 +1,20 @@
 package com.example.photoflickr.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.app.NavUtils;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 
+import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
 import com.example.photoflickr.R;
 import com.example.photoflickr.transformer.ZoomOutPageTransformer;
 import com.example.photoutil.ImageCache;
@@ -76,6 +82,9 @@ public class DetailActivity extends SherlockFragmentActivity {
 		if (extraCurrentItem != -1) {
 			mPager.setCurrentItem(extraCurrentItem);
 		}
+
+		ActionBar ab = getSupportActionBar();
+		ab.setDisplayHomeAsUpEnabled(true);
 	}
 
 	/**
@@ -129,4 +138,25 @@ public class DetailActivity extends SherlockFragmentActivity {
 		mImageFetcher.closeCache();
 		mImageFetcher.closeCache();
 	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		MenuInflater inflater = getSupportMenuInflater();
+		inflater.inflate(R.menu.detail, menu);
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case android.R.id.home:
+			NavUtils.navigateUpTo(this, new Intent(this, MainActivity.class));
+			break;
+
+		default:
+			break;
+		}
+		return super.onOptionsItemSelected(item);
+	}
+	
 }

@@ -5,7 +5,7 @@
     android:gravity="center_horizontal"
     android:orientation="horizontal"
     android:padding="3dp" >
-    <ProgressBar android:id="@+id/loading"
+    <org.holoeverywhere.widget.ProgressBar android:id="@+id/loading"
         android:layout_width="wrap_content"
         android:layout_height="fill_parent"
         android:gravity="center"

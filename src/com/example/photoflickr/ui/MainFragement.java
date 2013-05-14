@@ -5,6 +5,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -77,7 +78,8 @@ public class MainFragement extends SherlockFragment {
 		final View v = inflater.inflate(R.layout.fragement_main, container,
 				false);
 		View footer_view = inflater.inflate(R.layout.list_footer, null, false);
-		final ProgressBar loading = (ProgressBar) footer_view.findViewById(R.id.loading);
+		final ProgressBar loading = (ProgressBar) footer_view
+				.findViewById(R.id.loading);
 		// Bat su kien key Enter cua Edit Text
 		final EditText keyword = (EditText) v.findViewById(R.id.keyword);
 		keyword.setOnKeyListener(new OnKeyListener() {
@@ -96,7 +98,7 @@ public class MainFragement extends SherlockFragment {
 							+ "&page="
 							+ page
 							+ "&sort=interestingness-desc&accuracy=1&content_type=7&format=json&nojsoncallback=1";
-					new TaskSearch(photoView, list, adapter,null).execute(url);
+					new TaskSearch(photoView, list, adapter, null).execute(url);
 				}
 				return false;
 			}
@@ -112,11 +114,15 @@ public class MainFragement extends SherlockFragment {
 			@Override
 			public void onItemClick(AdapterView<?> parent, final View view,
 					int position, long id) {
+				Log.i("Position: ", position + "");
 				final ResultItem item = (ResultItem) parent
 						.getItemAtPosition(position);
-				Intent intent = new Intent(getActivity(), DetailActivity.class);
-				intent.putExtra(EXTRA_ITEM_POSITION, position);
-				startActivity(intent);
+				if (item != null) {
+					Intent intent = new Intent(getActivity(),
+							DetailActivity.class);
+					intent.putExtra(EXTRA_ITEM_POSITION, position);
+					startActivity(intent);
+				}
 			}
 		});
 
@@ -153,7 +159,8 @@ public class MainFragement extends SherlockFragment {
 							+ per_page
 							+ "&page="
 							+ page + "&format=json&nojsoncallback=1";
-					new TaskSearch(photoView, list, adapter,loading).execute(url);
+					new TaskSearch(photoView, list, adapter, loading)
+							.execute(url);
 				}
 			}
 
