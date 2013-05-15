@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
+import android.support.v4.app.TaskStackBuilder;
 import android.webkit.WebView;
 
 import com.actionbarsherlock.app.ActionBar;
@@ -45,15 +46,26 @@ public class ImageShowActivity extends SherlockActivity {
 		return true;
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case android.R.id.home:
-			NavUtils.navigateUpTo(this, new Intent(this, DetailActivity.class));
-			break;
-
-		default:
-			break;
+			Intent upIntent = new Intent(this, DetailActivity.class);
+            if (NavUtils.shouldUpRecreateTask(this, upIntent)) {
+                // This activity is not part of the application's task, so create a new task
+                // with a synthesized back stack.
+                TaskStackBuilder.from(this)
+                        .addNextIntent(new Intent(this, MainActivity.class))
+                        .addNextIntent(upIntent)
+                        .startActivities();
+                finish();
+            } else {
+                // This activity is part of the application's task, so simply
+                // navigate up to the hierarchical parent activity.
+                NavUtils.navigateUpTo(this, upIntent);
+            }
+            return true;
 		}
 		return super.onOptionsItemSelected(item);
 	}

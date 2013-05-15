@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.app.NavUtils;
+import android.support.v4.app.TaskStackBuilder;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 
@@ -146,15 +147,25 @@ public class DetailActivity extends SherlockFragmentActivity {
 		return true;
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case android.R.id.home:
-			NavUtils.navigateUpTo(this, new Intent(this, MainActivity.class));
-			break;
-
-		default:
-			break;
+			Intent upIntent = new Intent(this, MainActivity.class);
+            if (NavUtils.shouldUpRecreateTask(this, upIntent)) {
+                // This activity is not part of the application's task, so create a new task
+                // with a synthesized back stack.
+                TaskStackBuilder.from(this)
+                        .addNextIntent(upIntent)
+                        .startActivities();
+                finish();
+            } else {
+                // This activity is part of the application's task, so simply
+                // navigate up to the hierarchical parent activity.
+                NavUtils.navigateUpTo(this, upIntent);
+            }
+            return true;
 		}
 		return super.onOptionsItemSelected(item);
 	}

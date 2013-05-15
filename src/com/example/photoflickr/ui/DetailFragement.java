@@ -19,6 +19,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.webkit.WebView;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.ImageButton;
@@ -196,7 +197,7 @@ public class DetailFragement extends SherlockFragment {
 				.findViewById(R.id.location);
 		TextView tv_postdate = (TextView) header_view
 				.findViewById(R.id.postdate);
-		TextView tv_description = (TextView) header_view
+		WebView tv_description = (WebView) header_view
 				.findViewById(R.id.description);
 		TextView tv_viewcount = (TextView) header_view
 				.findViewById(R.id.viewcount);
@@ -208,7 +209,10 @@ public class DetailFragement extends SherlockFragment {
 		tv_location.setText(item.getLocation());
 		tv_postdate.setText(item.getPostDate());
 		tv_viewcount.setText("Views: " + item.getViewCount());
-		tv_description.setText(item.getDescription());
+		String html = "<html><body style='background: transparent; color: white;'>" + item.getDescription() + "</body></html>";
+		tv_description.loadData(html , "text/html", "UTF-8");
+		tv_description.setBackgroundColor(0x00000000);
+		tv_description.setLayerType(WebView.LAYER_TYPE_SOFTWARE, null);
 		MainFragement.getAvatarFetcher().loadImage(item.getAvatarUrl(),
 				img_avatar);
 	}
