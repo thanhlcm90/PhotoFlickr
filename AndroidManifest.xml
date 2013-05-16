@@ -13,6 +13,10 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <uses-feature android:name="android.feature.camera" />
+    <uses-feature android:name="android.feature.camera.autofocus" />
 
     <application
         android:allowBackup="true"
@@ -42,10 +46,28 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_image_show"
             android:parentActivityName="com.example.photoflickr.ui.DetailActivity"
-            android:theme="@style/FullscreenTheme">
+            android:theme="@style/FullscreenTheme" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.photoflickr.DetailActivity" />
+        </activity>
+        <activity
+            android:name="com.example.photoflickr.ui.CameraActivity"
+            android:label="@string/title_activity_camera"
+            android:parentActivityName="com.example.photoflickr.ui.MainActivity"
+            android:screenOrientation="landscape">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.photoflickr.ui.MainActivity" />
+
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="photoflickr-android-sample-oauth" />
+            </intent-filter>
         </activity>
     </application>
 

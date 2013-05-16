@@ -51,20 +51,7 @@ public class ImageShowActivity extends SherlockActivity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case android.R.id.home:
-			Intent upIntent = new Intent(this, DetailActivity.class);
-            if (NavUtils.shouldUpRecreateTask(this, upIntent)) {
-                // This activity is not part of the application's task, so create a new task
-                // with a synthesized back stack.
-                TaskStackBuilder.from(this)
-                        .addNextIntent(new Intent(this, MainActivity.class))
-                        .addNextIntent(upIntent)
-                        .startActivities();
-                finish();
-            } else {
-                // This activity is part of the application's task, so simply
-                // navigate up to the hierarchical parent activity.
-                NavUtils.navigateUpTo(this, upIntent);
-            }
+			NavUtils.navigateUpFromSameTask(this);
             return true;
 		}
 		return super.onOptionsItemSelected(item);

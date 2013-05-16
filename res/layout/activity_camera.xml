@@ -1,0 +1,52 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/fullscreen_content"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+    <FrameLayout
+        android:id="@+id/camera_preview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true" />
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
+        android:background="@color/black_overlay"
+        >
+
+        <RelativeLayout
+            android:id="@+id/button_capture_group"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:background="@color/transparent"
+            android:rotation="-90"  >
+
+            <org.holoeverywhere.widget.Button
+                android:id="@+id/button_recapture"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:text="@string/button_recapture"
+                android:visibility="invisible" />
+
+            <org.holoeverywhere.widget.Button
+                android:id="@+id/button_capture"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:text="@string/button_capture" />
+
+            <org.holoeverywhere.widget.Button
+                android:id="@+id/button_upload"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/button_recapture"
+                android:layout_centerHorizontal="true"
+                android:text="@string/button_upload" />
+        </RelativeLayout>
+    </RelativeLayout>
+
+</RelativeLayout>

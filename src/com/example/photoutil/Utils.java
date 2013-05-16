@@ -13,6 +13,7 @@ import org.json.JSONObject;
 
 import com.example.photoflickr.ui.MainActivity;
 
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.net.http.AndroidHttpClient;
 import android.os.Build;
@@ -22,6 +23,7 @@ import android.util.Log;
 public class Utils {
 	
 
+	@SuppressLint("NewApi")
 	public static JSONObject getJSONfromURL(String url){
 
 		//initialize

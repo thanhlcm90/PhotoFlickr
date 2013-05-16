@@ -2,9 +2,15 @@
 
     <item
         android:id="@+id/action_search"
-        android:icon="@drawable/abs__ic_search"
+        android:icon="@drawable/action_search"
         android:showAsAction="ifRoom"
         android:title="@string/action_search"
         android:titleCondensed="@string/action_search"/>
 
+    <item
+        android:id="@+id/action_upload"
+        android:icon="@drawable/action_upload"
+        android:showAsAction="ifRoom"
+        android:title="@string/action_upload"
+        android:titleCondensed="@string/action_upload"/>
 </menu>

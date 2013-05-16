@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <color name="username_comment">#201cab</color>
+    <color name="username_comment">#ff33b5e5</color>
     <color name="black_overlay">#66000000</color>
-
 </resources>
