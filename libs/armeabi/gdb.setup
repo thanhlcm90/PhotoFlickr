@@ -1,0 +1,2 @@
+set solib-search-path /home/cnc/Android/PhotoFlickr/obj/local/armeabi
+directory /home/cnc/Downloads/android-ndk-r8e/platforms/android-14/arch-arm/usr/include /home/cnc/Downloads/android-ndk-r8e/sources/cxx-stl/system /home/cnc/Downloads/android-ndk-r8e/sources/cxx-stl/system/include /home/cnc/Android/PhotoFlickr/jni
